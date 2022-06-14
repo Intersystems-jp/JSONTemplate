@@ -12,6 +12,7 @@ XData Template [ MimeType = application/json ]
       "#(..#Profile)#"
     ]
   },
+  "text": "#(..text)#",
   "name": [
     {
       "extension": [
@@ -56,5 +57,7 @@ Property FirstName As %String;
 Property LastNameKana As %String;
 
 Property FirstNameKana As %String;
+
+Property text As FHIRTemplate.DataType.Narrative;
 
 }

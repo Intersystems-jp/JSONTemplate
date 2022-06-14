@@ -189,4 +189,11 @@ ClassMethod GetByCode(code As %String) As JSONTemplate.Base [ Abstract ]
 	quit ""
 }
 
+/// JSON出力前処理
+/// JSONを出力する前に実行されるコールバック
+Method OnBeforeProcess() As %Status
+{
+    quit $$$OK
+}
+
 }

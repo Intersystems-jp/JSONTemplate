@@ -21,4 +21,10 @@ Parameter ResourceType = "Resource";
 
 Parameter Profile;
 
+Method GetResources(br As FHIRTemplate.Util.BundleResource) As %Integer
+{
+  // 自分自身を登録
+  quit br.AddResource($this)
+}
+
 }

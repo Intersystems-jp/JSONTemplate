@@ -5,7 +5,7 @@ Class FHIRTemplate.Encounter.diagnosis Extends JSONTemplate.Base
 /// Conditionリソース
 Property condition As FHIRTemplate.Condition;
 
-Property role As list Of FHIRTemplate.Examples.DiagnosisRoleCode;
+Property role As %String;
 
 Property rank As %Integer [ InitialExpression = 1 ];
 
@@ -17,7 +17,7 @@ XData Template [ MimeType = application/json ]
             "condition": "#(..condition(FHIRTemplate.Reference))#",
             "use":{
                 "coding":[
-                    "#(..role)#"
+                    "#(..role(FHIRCustom.Coding.DiagnosisRoleCode))#"
                 ]
             },
             "rank":"#(..rank)#"

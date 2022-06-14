@@ -3,30 +3,26 @@ Class FHIRTemplate.Encounter Extends Resource
 
 Parameter ResourceType = "Encounter";
 
-Property Identifier As FHIRTemplate.DataType.Identifier;
+Property encounterId As %String;
 
-Property Class As FHIRTemplate.Examples.ActCode;
+Property class As %String;
 
-Property ClassHistoryClass As FHIRTemplate.Examples.ActCode;
+Property period As FHIRTemplate.DataType.Period;
 
-Property ClassHistoryPeriod As FHIRTemplate.DataType.Period;
-
-Property Period As FHIRTemplate.DataType.Period;
-
-Property Length As FHIRTemplate.DataType.Duration;
+Property length As FHIRTemplate.DataType.Duration;
 
 /// reasonCode.coding.0.systemが記入できる場合コードで。MEDIS：標準病名マスター病名交換用コードが例にある（urn:oid:1.2.392.200119.4.101.6）
-Property ReasonCode As list Of FHIRTemplate.Examples.ByomeiCode;
+Property reasonCode As list Of FHIRCustom.CodeableConcept.ByomeiCode;
 
 /// Diagnosis
-Property Diagnosis As FHIRTemplate.Encounter.diagnosis;
+Property diagnosis As list Of FHIRTemplate.Encounter.diagnosis;
 
 /// Organizationリソース
-Property HospitalizationOrigin As FHIRTemplate.Organization;
+Property hospitalizationOrigin As FHIRTemplate.Organization;
 
-Property AdmitSource As FHIRTemplate.DataType.CodeableConcept;
+Property admitSource As %String;
 
-Property DischargeDisposition As FHIRTemplate.DataType.CodeableConcept;
+Property dischargeDisposition As FHIRTemplate.DataType.CodeableConcept;
 
 Property Rank As %Integer [ InitialExpression = 1 ];
 
@@ -39,33 +35,24 @@ XData Template [ MimeType = application/json ]
     "meta": {
         "profile": ["http://jpfhir.jp/fhir/eClinicalSummary/StructureDefinition/JP_Encounter_eClinicalSummary"]   
     },
-    "identifier":["#(..Identifier)#"],        
-    "status": "finished",
-    "class": "#(..Class)#",
-    "classHistory":[
+    "identifier":[
         {
-            "class":"#(..ClassHistoryClass)#",
-            "period":"#(..ClassHistoryPeriod)#"
+            "system": "http://jpfhir.jp/fhir/Common/CodeSystem/resourceInstance-identifier",
+            "value": "#(..encounterId)#"
         }
-    ],
-    "period":"#(..Period)#",
-    "length":"#(..Length)#",
-    "reasonCode": ["#(..ReasonCode)#"],
+    ],     
+    "status": "finished",
+    "class": "#(..class(FHIRCustom.Coding.ActCode))#",
+    "period":"#(..period)#",
+    "length":"#(..length)#",
+    "reasonCode": ["#(..reasonCode)#"],
     "diagnosis":[
-        "#(..Diagnosis)#"
+        "#(..diagnosis)#"
     ],
     "hospitalization":{
-        "origin":"#(..HospitalizationOrigin(Reference))#",
-        "admitSource": {
-        	"coding": [
-                "#(..AdmitSource)#"
-        	]
-        },
-        "dischargeDisposition": {
-        	"coding": [
-                "#(..DischargeDisposition)#"
-        	]
-        }
+        "origin":"#(..hospitalizationOrigin(Reference))#",
+        "admitSource": "#(..admitSource(FHIRCustom.CodeableConcept.AdmitSource))#",
+        "dischargeDisposition": "#(..dischargeDisposition)#"
     }
 }
 }

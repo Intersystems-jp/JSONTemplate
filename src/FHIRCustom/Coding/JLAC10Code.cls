@@ -1,4 +1,4 @@
-Class FHIRTemplate.Examples.JLAC10Code Extends FHIRTemplate.DataType.CodingBase
+Class FHIRCustom.Coding.JLAC10Code Extends FHIRTemplate.DataType.CodingBase
 {
 
 Parameter CodeSystem = "http://jpfhir.jp/fhir/eCheckup/CodeSystem/jlac10";

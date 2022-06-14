@@ -1,5 +1,5 @@
-/// 傷病名マスターサンプル
-Class FHIRMaster.DB.ByomeiCode Extends %Persistent
+/// 修飾語交換用コードテーブルサンプル
+Class FHIRCustom.DB.ModifierCode Extends %Persistent
 {
 
 /// コード
@@ -11,7 +11,7 @@ Property Name As %String;
 Index IDKeyIdx On Code [ IdKey, Unique ];
 
 /// データのインポート
-/// nmain509.txtを読み込む
+/// mdfy509.txtを読み込む
 ClassMethod ImportData(filename As %String) As %Status
 {
     set ret=$$$OK
@@ -23,10 +23,10 @@ ClassMethod ImportData(filename As %String) As %Status
 
         while 'file.AtEnd {
             set line=file.ReadLine()
-            if $length(line,""",""")>=13 {
+            if $length(line,""",""")>=5 {
                 set obj=..%New()
-                set obj.Code=$piece(line,""",""",13)
-                set obj.Name=$piece(line,""",""",6)
+                set obj.Code=$piece(line,""",""",5)
+                set obj.Name=$piece(line,""",""",3)
                 set ret=obj.%Save()
                 //quit:$$$ISERR(ret)
             }
@@ -39,7 +39,7 @@ ClassMethod ImportData(filename As %String) As %Status
 
 Storage Default
 {
-<Data name="ByomeiCodeDefaultData">
+<Data name="ModifierCodeDefaultData">
 <Value name="1">
 <Value>%%CLASSNAME</Value>
 </Value>
@@ -47,11 +47,11 @@ Storage Default
 <Value>Name</Value>
 </Value>
 </Data>
-<DataLocation>^FHIRMaster.DB.ByomeiCodeD</DataLocation>
-<DefaultData>ByomeiCodeDefaultData</DefaultData>
-<IdLocation>^FHIRMaster.DB.ByomeiCodeD</IdLocation>
-<IndexLocation>^FHIRMaster.DB.ByomeiCodeI</IndexLocation>
-<StreamLocation>^FHIRMaster.DB.ByomeiCodeS</StreamLocation>
+<DataLocation>^FHIRCustom.DB.ModifierCodeD</DataLocation>
+<DefaultData>ModifierCodeDefaultData</DefaultData>
+<IdLocation>^FHIRCustom.DB.ModifierCodeD</IdLocation>
+<IndexLocation>^FHIRCustom.DB.ModifierCodeI</IndexLocation>
+<StreamLocation>^FHIRCustom.DB.ModifierCodeS</StreamLocation>
 <Type>%Storage.Persistent</Type>
 }
 

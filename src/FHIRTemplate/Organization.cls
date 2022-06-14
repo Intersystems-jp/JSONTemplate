@@ -4,34 +4,32 @@ Class FHIRTemplate.Organization Extends Resource
 
 Parameter ResourceType = "Organization";
 
-Property TextDiv As %String(MAXLEN = 10000);
+Property textDiv As FHIRTemplate.DataType.Narrative;
 
 /// Extentionのidentifier.valueIdentifier.value
-Property PrefNum As %String;
+Property prefNum As %String;
 
 /// 点数コード　1:医科,3:歯科
-Property TensuCode As %String(VALUELIST = ",1,3");
+Property tensuCode As %String(VALUELIST = ",1,3");
 
 /// 保険医療機関番号7桁
-Property HokenNum7 As %String(MAXLEN = 7, MINLEN = 7);
+Property hokenNum7 As %String(MAXLEN = 7, MINLEN = 7);
 
 /// 保険医療機関番号10桁
-Property HokenNum10 As %String(MAXLEN = 10, MINLEN = 10);
+Property hokenNum10 As %String(MAXLEN = 10, MINLEN = 10);
 
 /// 医療機関名称
-Property HospitalName As %String(MAXLEN = 100);
+Property hospitalName As %String(MAXLEN = 100);
 
-/// 医療機関電話番号
-Property Phone As %String;
+/// 医療機関連絡先
+Property phone As %String;
 
-/// 医療機関住所文字列
-Property AddressText As %String(MAXLEN = 100);
+/// 医療機関住所
+Property addressText As %String;
 
 /// 医療機関郵便番号
-Property AddressZip As %String;
+Property addressZip As %String;
 
-/// 固定値
-/// meta.profile/extension/
 XData Template [ MimeType = application/json ]
 {
 {
@@ -39,37 +37,34 @@ XData Template [ MimeType = application/json ]
     "meta": {
         "profile": ["http://jpfhir.jp/fhir/eClinicalSummary/StructureDefinition/JP_Organization_eClinicalSummary_issuer"]
     },
-    "text":{
-        "status":"generated",
-        "div":"#(..TextDiv)#"
-    },
+    "text": "#(..textDiv)#",
     "extension":[
         {
             "url":"http://jpfhir.jp/fhir/core/Extension/StructureDefinition/JP_Organization_PrefectureNo",
             "valueIdentifier":{
                 "system":"urn:oid:1.2.392.100495.20.3.21",
-                "value":"#(..PrefNum)#"
+                "value":"#(..prefNum)#"
             }
         },
         {
             "url":"http://jpfhir.jp/fhir/core/Extension/StructureDefinition/JP_Organization_InsuranceOrganizationCategory",
             "valueIdentifier":{
                 "system":"urn:oid:1.2.392.100495.20.3.22",
-                "value":"#(..TensuCode)#"
+                "value":"#(..tensuCode)#"
             }            
         },
         {
             "url":"http://jpfhir.jp/fhir/core/Extension/StructureDefinition/JP_Organization_InsuranceOrganizationNo",
             "valueIdentifier":{
                 "system":"urn:oid:1.2.392.100495.20.3.23",
-                "value":"#(..HokenNum7)#"
+                "value":"#(..hokenNum7)#"
             }            
         }
     ],
     "identifier": [
         {
             "system": "http://jpfhir.jp/fhir/Common/CodeSystem/insurance-medical-nstitution-no",
-            "value":"#(..HokenNum10)#"
+            "value":"#(..hokenNum10)#"
         }
     ],
     "type": [
@@ -78,22 +73,22 @@ XData Template [ MimeType = application/json ]
                 {
                     "system": "http://terminology.hl7.org/CodeSystem/organization-type",
                     "code": "prov",
-                    "display": "#(..HospitalName)#"
+                    "display": "#(..hospitalName)#"
                 }
             ]
         }
     ],
-    "name": "#(..HospitalName)#",
+    "name": "#(..hospitalName)#",
     "telecom": [
         {
             "system": "phone",
-            "value": "#(..Phone)#"
+            "value": "#(..phone)#"
         }
     ],
     "address": [
         {
-            "text":"#(..AddressText)#",
-            "postalCode": "#(..AddressZip)#",
+            "text":"#(..addressText)#",
+            "postalCode": "#(..addressZip)#",
             "country": "JP"
         }
     ]

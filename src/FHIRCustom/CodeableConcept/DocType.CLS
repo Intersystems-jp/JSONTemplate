@@ -1,11 +1,11 @@
 /// 文書タイプ
-Class FHIRTemplate.Examples.DocType Extends FHIRTemplate.DataType.CodingBase
+Class FHIRCustom.CodeableConcept.DocType Extends FHIRTemplate.DataType.CodeableConceptBase
 {
 
 Parameter CodeSystem = "http://jpfhir.jp/fhir/Common/CodeSystem/doc-typecodes";
 
 /// コードからインスタンスを取得
-ClassMethod GetByCode(code As %String) As DocType
+ClassMethod GetByCode(code As %String) As FHIRTemplate.DataType.CodeableConceptBase
 {
     set obj=..%New()
     if code="18842-5" {

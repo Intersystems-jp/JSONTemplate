@@ -29,7 +29,7 @@ XData Template [ MimeType = application/json ]
         }
       ],
       "use": "official",
-      "text": "#(..LastName)# #(..FirstName)#",
+      "text": "#(..LastName)#　#(..FirstName)#",
       "family": "#(..LastName)#",
       "given": [
         "#(..FirstName)#"
@@ -43,7 +43,7 @@ XData Template [ MimeType = application/json ]
         }
       ],
       "use": "official",
-      "text": "#(..LastNameKana)# #(..FirstNameKana)#",
+      "text": "#(..LastNameKana)#　#(..FirstNameKana)#",
       "family": "#(..LastNameKana)#",
       "given": [
         "#(..FirstNameKana)#"
@@ -60,10 +60,7 @@ XData Template [ MimeType = application/json ]
   "gender": "#(..Gender)#",
   "birthDate": "#(..DOB)#",
   "address": [
-    {
-      "postalCode": "#(..PostalCode)#",
-      "text": "#(..Address)#"
-    }
+    "#(..Address)#"
   ],
   "maritalStatus": "#(..MaritalStatus)#"
 }
@@ -87,15 +84,13 @@ Property DOB As %Date(FORMAT = 3);
 
 Property Gender As %String(DISPLAYLIST = ",male,female", VALUELIST = ",1,2");
 
-Property PostalCode As %String;
-
 /// 医療機関コード
-Property MedInstCode As %String;
+Property MedInstCode As %String [ InitialExpression = "1311234567" ];
 
 /// 患者ID
 Property PatientId As %String;
 
-Property Address As %String;
+Property Address As FHIRTemplate.DataType.Address;
 
 Property MaritalStatus As FHIRTemplate.DataType.CodeableConcept;
 
