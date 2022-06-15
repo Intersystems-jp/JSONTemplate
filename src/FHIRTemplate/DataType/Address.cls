@@ -6,7 +6,7 @@ XData Template [ MimeType = application/json ]
 {
         "use":"#(..use)#",
         "type":"#(..type)#",
-        "text":"#(..state)##(..city)##(..line)#",
+        "text":"#(..text)#",
         "line":"#(..line)#",
         "city": "#(..city)#",
         "district":"#(..district)#",
@@ -35,5 +35,15 @@ Property postalCode As %String;
 Property country As %String;
 
 Property period As Period;
+
+/// JSON出力前処理
+/// JSONを出力する前に実行されるコールバック
+ClassMethod OnPreProcess(obj As FHIRTemplate.Resource) As %Status
+{
+   if obj.text=""&&((obj.state'="")||(obj.city'="")) {
+        set obj.text=obj.state_obj.city_obj.line
+   }
+   quit $$$OK
+}
 
 }

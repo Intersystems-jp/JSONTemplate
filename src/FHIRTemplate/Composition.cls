@@ -85,7 +85,7 @@ Property section As list Of FHIRTemplate.Composition.section;
 Method GetResources(br As FHIRTemplate.Util.BundleResource) As %Integer
 {
   // 自分自身を登録
-  set ret=##super(br)
+  set ret=br.AddResource($this)
   quit:ret<1 ret // 既に登録されていれば終了
 
   // 関連リソースの取り込み

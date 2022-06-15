@@ -49,7 +49,7 @@ Property attester As FHIRTemplate.Practitioner;
 Property signatureData As %String;
 
 /// FHIRドキュメントの作成
-ClassMethod CreateFHIRDocument(composition As Composition) As Bundle
+ClassMethod CreateFHIRDocument(composition As Composition, attester As Practitioner = "") As Bundle
 {
   set obj=..%New()
   set obj.type="document"
@@ -57,6 +57,12 @@ ClassMethod CreateFHIRDocument(composition As Composition) As Bundle
   
   // bundleリソース管理クラスのインスタンスを取得
   set br=##class(FHIRTemplate.Util.BundleResource).%New()
+
+  // 文書法的責任者が指定されていればそのリソースも登録
+  if $isobject(attester) {
+    set obj.attester=attester
+    do br.AddResource(attester)
+  }
 
   // 指定されたCompositionリソースから関連するリソースを取得
   do composition.GetResources(br)

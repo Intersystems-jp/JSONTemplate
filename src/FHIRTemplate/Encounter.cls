@@ -22,7 +22,7 @@ Property hospitalizationOrigin As FHIRTemplate.Organization;
 
 Property admitSource As %String;
 
-Property dischargeDisposition As FHIRTemplate.DataType.CodeableConcept;
+Property dischargeDisposition As %String;
 
 Property Rank As %Integer [ InitialExpression = 1 ];
 
@@ -52,7 +52,7 @@ XData Template [ MimeType = application/json ]
     "hospitalization":{
         "origin":"#(..hospitalizationOrigin(Reference))#",
         "admitSource": "#(..admitSource(FHIRCustom.CodeableConcept.AdmitSource))#",
-        "dischargeDisposition": "#(..dischargeDisposition)#"
+        "dischargeDisposition": "#(..dischargeDisposition(FHIRCustom.CodableConcept.DischargeCode))#"
     }
 }
 }

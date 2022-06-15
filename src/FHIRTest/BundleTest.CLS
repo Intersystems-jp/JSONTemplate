@@ -36,6 +36,7 @@ ClassMethod Test1()
     do sec342.entry.Insert(..CreateCondition(cobj.subject,cobj.encounter))
     do cobj.section.Insert(sec342)
 
+    // FHIRドキュメントの作成
     set bundle=##class(FHIRTemplate.Bundle).CreateFHIRDocument(cobj)
     set ret=bundle.OutputToFile("c:\temp\bundle-test.json")
     if $$$ISOK(ret) {
@@ -52,9 +53,9 @@ ClassMethod CreatePatient() As FHIRTemplate.Patient
     set obj=##class(FHIRTemplate.Patient).%New()
     
     set obj.PatientId="11122"
-    set obj.LastName="皆本",obj.FirstName="稔彦"
-    set obj.LastNameKana="ミナモト",obj.FirstNameKana="トシヒコ"
-    set obj.DOB=$zdateh("1968-10-02",3)
+    set obj.LastName="鈴木",obj.FirstName="喜朗"
+    set obj.LastNameKana="スズキ",obj.FirstNameKana="ヨシロウ"
+    set obj.DOB=$zdateh("1952-09-13",3)
     set obj.Gender=1
     set obj.Address={"postalCode":"5300003","text":"大阪府大阪市北区堂島2-1-31"}
     set obj.Phone="06-4797-3388"
@@ -90,6 +91,17 @@ ClassMethod CreateAuthor() As FHIRTemplate.Practitioner
 
     set obj.LastName="神奈川",obj.FirstName="花子"
     set obj.LastNameKana="カナガワ",obj.FirstNameKana="ハナコ"
+    quit obj
+}
+
+/// 文書法的責任者
+ClassMethod CreateAttester() As FHIRTemplate.Practitioner
+{
+    #dim obj as FHIRTemplate.Practitioner
+    set obj=##class(FHIRTemplate.Practitioner).%New()
+
+    set obj.LastName="関",obj.FirstName="任太郎"
+    set obj.LastNameKana="セキ",obj.FirstNameKana="ニンタロウ"
     quit obj
 }
 

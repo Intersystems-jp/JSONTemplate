@@ -9,7 +9,7 @@ XData Template [ MimeType = application/json ]
 {
 {
         "status":"#(..status)#",
-        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">#(..div)#</div>"
+        "div": "<div xmlns='http://www.w3.org/1999/xhtml'>#(..div)#</div>"
 }
 }
 

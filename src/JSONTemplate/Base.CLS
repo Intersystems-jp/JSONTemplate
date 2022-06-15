@@ -101,6 +101,12 @@ ClassMethod Process(obj As %RegisteredObject, ByRef ret As %Status) As %DynamicA
         }
         do %code.WriteLine(" set ret=$$$OK try {")
 
+        // OnPreProcess()メソッドがあれば呼び出す
+        set mdef=##class(%Dictionary.CompiledMethod).%OpenId(%class.Name_"||OnPreProcess")
+        if $isobject(mdef)&&(mdef.Implementation.Size>0) {
+            do %code.WriteLine(" set ret=..OnPreProcess(obj) quit:$$$ISERR(ret)")
+        }
+
         // テンプレートを読み込む
         Set compiledXdata=##class(%Dictionary.CompiledXData).%OpenId(%class.Name_"||Template")
         set tplstm=compiledXdata.Data
@@ -191,9 +197,8 @@ ClassMethod GetByCode(code As %String) As JSONTemplate.Base [ Abstract ]
 
 /// JSON出力前処理
 /// JSONを出力する前に実行されるコールバック
-Method OnBeforeProcess() As %Status
+ClassMethod OnPreProcess(obj As FHIRTemplate.Resource) As %Status
 {
-    quit $$$OK
 }
 
 }

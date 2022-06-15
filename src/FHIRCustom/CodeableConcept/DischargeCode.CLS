@@ -1,20 +1,21 @@
-/// 文書カテゴリ
-Class FHIRCustom.Coding.DischargeCode Extends (%Persistent, FHIRTemplate.DataType.CodingBase, FHIRTemplate.Util.CodeTable)
+/// 退院時転帰コード
+Class FHIRCustom.CodableConcept.DischargeCode Extends (%Persistent, FHIRTemplate.Util.CodeTable, FHIRTemplate.DataType.CodingBase)
 {
 
-Parameter CodeSystem = "http://jpfhir.jp/fhir/Common/CodeSystem/admit-Source";
+Parameter CodeSystem = "http://jpfhir.jp/fhir/Common/CodeSystem/discharge-disposition";
 
 Index IDKeyIdx On code [ IdKey, Unique ];
 
 XData InsertCode [ MimeType = application/json ]
 {
 { "data":[
-    "0;院内の他病棟からの転棟",
-    "1;家庭からの入院",
-    "4;他の病院・診療所の病棟からの転院",
-    "5;介護施設・福祉施設に入所中",
-    "8;院内で出生",
-    "9;その他"
+"1;傷病が治癒・軽快",
+"3;傷病（白血病、潰瘍性大腸炎、クローン病等）が寛解",
+"4;傷病が不変",
+"5;傷病が増悪",
+"6;傷病による死亡",
+"7;傷病以外による死亡",
+"9;その他（検査入院,正常分娩及び人間ドック含む）"
   ]  
 }
 }
@@ -35,11 +36,11 @@ Storage Default
 <Value>userSelected</Value>
 </Value>
 </Data>
-<DataLocation>^FHIRCustom.CF1F6.DischargeCodeD</DataLocation>
+<DataLocation>^FHIRCustom.C3789.DischargeCodeD</DataLocation>
 <DefaultData>DischargeCodeDefaultData</DefaultData>
-<IdLocation>^FHIRCustom.CF1F6.DischargeCodeD</IdLocation>
-<IndexLocation>^FHIRCustom.CF1F6.DischargeCodeI</IndexLocation>
-<StreamLocation>^FHIRCustom.CF1F6.DischargeCodeS</StreamLocation>
+<IdLocation>^FHIRCustom.C3789.DischargeCodeD</IdLocation>
+<IndexLocation>^FHIRCustom.C3789.DischargeCodeI</IndexLocation>
+<StreamLocation>^FHIRCustom.C3789.DischargeCodeS</StreamLocation>
 <Type>%Storage.Persistent</Type>
 }
 
