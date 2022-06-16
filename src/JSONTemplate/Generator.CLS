@@ -18,7 +18,7 @@ ClassMethod GenerateObject(outstream As %Stream, type As %String, template As %D
         while iter.%GetNext(.mkey,.value,.mtype) {
 #Else
         while iter.%GetNext(.mkey,.value) {
-            set mtype=$select($isobject(value):$select(value.%IsA("%DynamicArray"):"object",1:"array"),1:"string")
+            set mtype=$select($isobject(value):$select(value.%IsA("%DynamicArray"):"array",1:"object"),1:"string")
 #Endif
              if mtype="object" {
                 // メンバーがオブジェクトの場合
