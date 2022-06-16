@@ -1,5 +1,5 @@
 /// 傷病名マスターサンプル
-Class FHIRMaster.DB.ByomeiCode Extends %Persistent
+Class FHIRCustom.DB.ByomeiCode Extends %Persistent
 {
 
 /// コード
@@ -47,11 +47,11 @@ Storage Default
 <Value>Name</Value>
 </Value>
 </Data>
-<DataLocation>^FHIRMaster.DB.ByomeiCodeD</DataLocation>
+<DataLocation>^FHIRCustom.DB.ByomeiCodeD</DataLocation>
 <DefaultData>ByomeiCodeDefaultData</DefaultData>
-<IdLocation>^FHIRMaster.DB.ByomeiCodeD</IdLocation>
-<IndexLocation>^FHIRMaster.DB.ByomeiCodeI</IndexLocation>
-<StreamLocation>^FHIRMaster.DB.ByomeiCodeS</StreamLocation>
+<IdLocation>^FHIRCustom.DB.ByomeiCodeD</IdLocation>
+<IndexLocation>^FHIRCustom.DB.ByomeiCodeI</IndexLocation>
+<StreamLocation>^FHIRCustom.DB.ByomeiCodeS</StreamLocation>
 <Type>%Storage.Persistent</Type>
 }
 

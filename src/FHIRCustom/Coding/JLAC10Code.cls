@@ -10,6 +10,7 @@ ClassMethod GetByCode(code As %String) As JLAC10Code
         &SQL(SELECT Name INTO :display FROM FHIRMaster.JLAC10Code WHERE code = :code)
         if SQLCODE=0 {
                 set obj=..%New()
+                set obj.code=code
                 set obj.display=display
                 quit obj
         }
