@@ -1,4 +1,4 @@
-Class FHIRCustom.CodeableConcept.DocCategory Extends FHIRTemplate.CodeableConcept.DocType
+Class FHIRCustom.CodeableConcept.DocCategory Extends FHIRCustom.CodeableConcept.DocType
 {
 
 Parameter CodeSystem = "http://jpfhir.jp/fhir/eClinicalSummary/CodeSystem/eClinicalSummary-category";
