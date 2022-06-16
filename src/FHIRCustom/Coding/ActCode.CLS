@@ -1,5 +1,5 @@
 /// 入院外来分類
-Class FHIRCustome.Coding.ActCode Extends FHIRTemplate.DataType.CodingBase
+Class FHIRCustom.Coding.ActCode Extends FHIRTemplate.DataType.CodingBase
 {
 
 Parameter CodeSystem = "http://terminology.hl7.org/CodeSystem/v3-ActCode";

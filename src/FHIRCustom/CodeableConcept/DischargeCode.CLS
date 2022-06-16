@@ -1,5 +1,5 @@
 /// 退院時転帰コード
-Class FHIRCustom.CodableConcept.DischargeCode Extends (%Persistent, FHIRTemplate.Util.CodeTable, FHIRTemplate.DataType.CodingBase)
+Class FHIRCustom.CodeableConcept.DischargeCode Extends (%Persistent, FHIRTemplate.Util.CodeTable, FHIRTemplate.DataType.CodingBase)
 {
 
 Parameter CodeSystem = "http://jpfhir.jp/fhir/Common/CodeSystem/discharge-disposition";
@@ -36,11 +36,11 @@ Storage Default
 <Value>userSelected</Value>
 </Value>
 </Data>
-<DataLocation>^FHIRCustom.C3789.DischargeCodeD</DataLocation>
+<DataLocation>^FHIRCustom.CC353.DischargeCodeD</DataLocation>
 <DefaultData>DischargeCodeDefaultData</DefaultData>
-<IdLocation>^FHIRCustom.C3789.DischargeCodeD</IdLocation>
-<IndexLocation>^FHIRCustom.C3789.DischargeCodeI</IndexLocation>
-<StreamLocation>^FHIRCustom.C3789.DischargeCodeS</StreamLocation>
+<IdLocation>^FHIRCustom.CC353.DischargeCodeD</IdLocation>
+<IndexLocation>^FHIRCustom.CC353.DischargeCodeI</IndexLocation>
+<StreamLocation>^FHIRCustom.CC353.DischargeCodeS</StreamLocation>
 <Type>%Storage.Persistent</Type>
 }
 
