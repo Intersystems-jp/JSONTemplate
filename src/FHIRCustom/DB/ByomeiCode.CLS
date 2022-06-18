@@ -23,10 +23,10 @@ ClassMethod ImportData(filename As %String) As %Status
 
         while 'file.AtEnd {
             set line=file.ReadLine()
-            if $length(line,""",""")>=13 {
+            if $length(line,""",""")>=6 {
                 set obj=..%New()
-                set obj.Code=$piece(line,""",""",13)
-                set obj.Name=$piece(line,""",""",6)
+                set obj.Code=$piece(line,""",""",6)
+                set obj.Name=$piece(line,""",""",3)
                 set ret=obj.%Save()
                 //quit:$$$ISERR(ret)
             }

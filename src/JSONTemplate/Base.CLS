@@ -197,7 +197,7 @@ ClassMethod GetByCode(code As %String) As JSONTemplate.Base [ Abstract ]
 
 /// JSON出力前処理
 /// JSONを出力する前に実行されるコールバック
-ClassMethod OnPreProcess(obj As FHIRTemplate.Resource) As %Status
+ClassMethod OnPreProcess(obj As JSONTemplate.Base) As %Status
 {
 }
 

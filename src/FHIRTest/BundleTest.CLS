@@ -1,7 +1,7 @@
 Class FHIRTest.BundleTest
 {
 
-ClassMethod Test1()
+ClassMethod Test1(ByRef body)
 {
     //#dim obj as FHIRTemplate.Bundle
     //set obj=##class(FHIRTemplate.Bundle).%New()
@@ -38,6 +38,7 @@ ClassMethod Test1()
 
     // FHIRドキュメントの作成
     set bundle=##class(FHIRTemplate.Bundle).CreateFHIRDocument(cobj)
+    set ret=bundle.OutputToDynamicObject(.body)
     set ret=bundle.OutputToFile("c:\temp\bundle-test.json")
     if $$$ISOK(ret) {
         use 0 write "正常終了",!
