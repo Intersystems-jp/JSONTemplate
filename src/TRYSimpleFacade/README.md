@@ -66,10 +66,10 @@
         iris session iris
         ```
 
-        対象ネームスペースに移動します（例はTESTネームスペースへ移動）
+        対象ネームスペースに移動します（例はTRAININGネームスペースへ移動）
 
         ```
-        set $namespace="test"
+        set $namespace="TRAINING"
         ```
 
         コンパイルを実施します。
