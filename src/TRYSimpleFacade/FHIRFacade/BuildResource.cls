@@ -1,7 +1,7 @@
 Class FHIRFacade.BuildResource
 {
 
-ClassMethod Test(ByRef json As %DynamicObject)
+ClassMethod Test(ByRef json As %DynamicObject) As %Status
 {
     #dim ex As %Exception.AbstractException
     set status=$$$OK
