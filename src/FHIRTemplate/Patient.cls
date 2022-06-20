@@ -29,7 +29,7 @@ XData Template [ MimeType = application/json ]
         }
       ],
       "use": "official",
-      "text": "#(..LastName)# #(..FirstName)#",
+      "text": "#(..LastName)#　#(..FirstName)#",
       "family": "#(..LastName)#",
       "given": [
         "#(..FirstName)#"
@@ -43,7 +43,7 @@ XData Template [ MimeType = application/json ]
         }
       ],
       "use": "official",
-      "text": "#(..LastNameKana)# #(..FirstNameKana)#",
+      "text": "#(..LastNameKana)#　#(..FirstNameKana)#",
       "family": "#(..LastNameKana)#",
       "given": [
         "#(..FirstNameKana)#"
