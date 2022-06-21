@@ -28,7 +28,7 @@ ClassMethod Patient(input As %DynamicObject, ByRef json As %DynamicObject, ByRef
         患者を特定する患者番号が第1引数にダイナミックオブジェクトとして渡される予定です。
          SELECTのWHEREに記述する条件（PID=xxxx）の引数は置き換え文字として ? を使用できます。
         */
-        set sql="SELECT JSON_OBJECT('PatientId':PID, 'FirstName':Given, 'LastName':Family, 'FirstNameKana':GivenKana, 'LastNameKana':FamilyKana, 'DOB':DOB, 'PostalCode':Zip, 'Address':Pref||City||Address, 'Phone':Tel, 'Gender':Gender) As json FROM ISJHospital.Patient where PID=?"
+        set sql="SELECT JSON_OBJECT('PatientId':PID, 'FirstName':Given, 'LastName':Family, 'FirstNameKana':GivenKana, 'LastNameKana':FamilyKana, 'DOB':DOB, 'Phone':Tel, 'Gender':Gender,'postalCode':Zip,'state':Pref,'city':City,'line':Address) As json FROM ISJHospital.Patient where PID=?"
 
         /*
         第1引数は組み立てたSQL文、第2引数は検索結果のダイナミックオブジェクトが設定されます。
@@ -85,7 +85,8 @@ ClassMethod Bundle(input As %DynamicObject, ByRef json As %DynamicObject, ByRef 
         set bundle=##class(FHIRCustom.BundlePatientObservation).%New()
 
         //Patient情報取得
-        set sql="SELECT JSON_OBJECT('PatientId':PID, 'FirstName':Given, 'LastName':Family, 'FirstNameKana':GivenKana, 'LastNameKana':FamilyKana, 'DOB':DOB, 'PostalCode':Zip, 'Address':Pref||City||Address, 'Phone':Tel, 'Gender':Gender) As json FROM ISJHospital.Patient where PID=?"
+        //set sql="SELECT JSON_OBJECT('PatientId':PID, 'FirstName':Given, 'LastName':Family, 'FirstNameKana':GivenKana, 'LastNameKana':FamilyKana, 'DOB':DOB, 'PostalCode':Zip, 'Address':Pref||City||Address, 'Phone':Tel, 'Gender':Gender) As json FROM ISJHospital.Patient where PID=?"
+        set sql="SELECT JSON_OBJECT('PatientId':PID, 'FirstName':Given, 'LastName':Family, 'FirstNameKana':GivenKana, 'LastNameKana':FamilyKana, 'DOB':DOB, 'Phone':Tel, 'Gender':Gender,'postalCode':Zip,'state':Pref,'city':City,'line':Address) As json FROM ISJHospital.Patient where PID=?"
         $$$ThrowOnError(##class(FHIRFacade.CollectData).RunQuery(sql,.rset,input.PID))
         if rset.%Size()=0 {
             throw ##class(%Exception.General).%New(5001,"指定の患者ID："_input.PID_"の患者は存在しません")

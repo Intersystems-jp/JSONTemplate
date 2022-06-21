@@ -34,7 +34,7 @@ ClassMethod RunQuery(sql As %String(MAXLEN=1000), ByRef result As %DynamicObject
 ClassMethod SQLDummy()
 {
     //Patient
-    set sql="SELECT JSON_OBJECT('PatientId':PID, 'FirstName':Given, 'LastName':Family, 'FirstNameKana':GivenKana, 'LastNameKana':FamilyKana, 'DOB':DOB, 'PostalCode':Zip, 'Address':Pref||City||Address, 'Phone':Tel, 'Gender':Gender) As json FROM ISJHospital.Patient where PID=?"
+    set sql="SELECT JSON_OBJECT('PatientId':PID, 'FirstName':Given, 'LastName':Family, 'FirstNameKana':GivenKana, 'LastNameKana':FamilyKana, 'DOB':DOB, 'Phone':Tel, 'Gender':Gender,'postalCode':Zip,'state':Pref,'city':City,'line':Address) As json FROM ISJHospital.Patient where PID=?"
     //Observation
     set sql="SELECT JSON_OBJECT('code':LabTestCode, 'display':LabTestText, 'value':Value, 'unit':Unit, 'EffectiveDateTime':LabTestDateTime) as json FROM ISJHospital.Observation WHERE PID=?"
 }

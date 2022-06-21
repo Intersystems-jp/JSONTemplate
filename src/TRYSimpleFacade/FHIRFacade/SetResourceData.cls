@@ -22,6 +22,10 @@ ClassMethod Patient(in As %DynamicObject, ByRef patient As FHIRTemplate.Patient)
     Patientリソースのインスタンスを生成しデータをセットします。
     */
     set patient=##class(FHIRTemplate.Patient).%New(in)
+    
+    //住所情報をセットします
+    set address=##class(FHIRTemplate.DataType.Address).%New(in)
+    set patient.Address=address
 
     //genderをFHIRリソースの形式に変換します（以下の行のコメントを外します）
     set patient.Gender=$select(patient.Gender="Male":1,1:2)
