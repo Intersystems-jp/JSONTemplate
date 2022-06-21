@@ -30,11 +30,11 @@ Property Criticality As %String(VALUELIST = ",low,high,unable-to-assess");
 
 Property Code As FHIRTemplate.DataType.CodeableConcept;
 
-/// Patient のUUID
-Property Patient As %String;
+/// Patient
+Property Patient As FHIRTemplate.Patient;
 
-/// Encounter のUUID
-Property Encounter As %String;
+/// Encounter
+Property Encounter As FHIRTemplate.Encounter;
 
 XData Template [ MimeType = application/json ]
 {
@@ -59,12 +59,8 @@ XData Template [ MimeType = application/json ]
     "category": ["#(..Category)#"],
     "criticality":"#(..Criticality)#",
     "code": "#(..Code)#",
-    "patient": {
-        "reference": "urn:uuid:#(..Patient)#"
-    },
-    "encounter":{
-        "reference":"urn:uuid:#(..Encounter)#"
-    }
+    "patient":"#(..Patient(FHIRTemplate.Reference))#",
+    "encounter":"#(..Encounter(FHIRTemplate.Reference))#"
 }
 }
 
