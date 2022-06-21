@@ -36,10 +36,12 @@ XData Template [ MimeType = application/json ]
   ],
   "title": "#(..title)#",
   "custodian": "#(..custodian(Reference))#",
-  "event": {
+  "event": [
+  {
     "code": "#(..eventCode)#",
     "period": "#(..eventPeriod)#"
-  },
+  }
+  ],
   "section": [
     "#(..section)#"
   ]

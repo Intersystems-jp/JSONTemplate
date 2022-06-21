@@ -37,8 +37,19 @@ ClassMethod Test1(ByRef body)
     do cobj.section.Insert(sec342)
 
     // FHIRドキュメントの作成
-    set bundle=##class(FHIRTemplate.Bundle).CreateFHIRDocument(cobj)
-    set ret=bundle.OutputToDynamicObject(.body)
+    set bundle=##class(FHIRTemplate.Bundle).CreateFHIRDocument(cobj,..CreateAttester())
+
+    // 証明書の取得
+    set certfile=##class(%Stream.FileBinary).%New()
+    do certfile.LinkToFile("c:\intersystems\iris2022\mgr\user1.key")
+    set ret=##class(%OAuth2.JWK).RSAASN1toJWK(certfile.Read(),"minamoto",.jwk)
+    if $$$ISERR(ret) {
+        use 0 write "JWK作成時にエラーが発生しました" do $SYSTEM.OBJ.DisplayError(ret)
+        quit
+    }
+    set bundle.CertificateData=jwk // 証明書の設定
+
+    // オブジェクトの出力
     set ret=bundle.OutputToFile("c:\temp\bundle-test.json")
     if $$$ISOK(ret) {
         use 0 write "正常終了",!

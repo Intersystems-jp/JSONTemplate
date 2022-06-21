@@ -20,27 +20,34 @@ Parameter %JSONENABLED = 1;
 /// 標準デバイスへの出力
 Method OutputToDevice() As %Status
 {
-        set ret=$$$OK
-        set json=..Process($this,.ret)
-        if $$$ISOK(ret) {
-            set out=##class(%JSON.Formatter).%New()
-            set out.Indent=1
-            set ret=out.Format(json)
-        }
-        quit ret
+    set ret=$$$OK
+    try {
+        set ret=..OutputToDynamicObject(.tpl)
+        quit:$$$ISERR(ret)
+
+        // フォーマット出力
+        set out=##class(%JSON.Formatter).%New()
+        set out.Indent=1
+        set ret=out.Format(tpl)
+    } catch err {
+        set ret=err.AsStatus()
+    }
+    quit ret
 }
 
 /// ファイルへの出力
 Method OutputToFile(filename As %String, charset As %String = "UTF8") As %Status
 {
     set ret=$$$OK
-    open filename:("WNS"_$select(charset'="":"K\"_charset_"\",1:"")):5
-    if '$test {
-        quit $$$ERROR($$$FileCanNotOpen,filename)
-    }
     try {
-        set tpl=..Process($this,.ret)
+        set ret=..OutputToDynamicObject(.tpl)
         quit:$$$ISERR(ret)
+
+        open filename:("WNS"_$select(charset'="":"K\"_charset_"\",1:"")):5
+        if '$test {
+            set ret=$$$ERROR($$$FileCanNotOpen,filename)
+            quit
+        }
 
         #dim out as %JSON.Formatter
         set out=##class(%JSON.Formatter).%New()
@@ -60,8 +67,9 @@ Method OutputToStream(stream As %Stream) As %Status
 {
     set ret=$$$OK
     try {
-        set tpl=..Process($this,.ret)
+        set ret=..OutputToDynamicObject(.tpl)
         quit:$$$ISERR(ret)
+
         do tpl.%ToJSON(stream)
     } catch err {
         set ret=err.AsStatus()
