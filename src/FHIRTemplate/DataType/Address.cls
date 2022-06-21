@@ -7,7 +7,7 @@ XData Template [ MimeType = application/json ]
         "use":"#(..use)#",
         "type":"#(..type)#",
         "text":"#(..text)#",
-        "line":"#(..line)#",
+        "line": ["#(..line)#"],
         "city": "#(..city)#",
         "district":"#(..district)#",
         "state":"#(..state)#",

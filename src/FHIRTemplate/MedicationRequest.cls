@@ -21,8 +21,8 @@ Property MedicationCodeableConcept As FHIRTemplate.DataType.CodeableConcept;
 
 Property AuthoredOn As FHIRTemplate.DataType.TimeStamp;
 
-/// Patient のUUID
-Property Patient As %String;
+/// Patient
+Property Patient As FHIRTemplate.Patient;
 
 Property DosageInstructionPeriod As FHIRTemplate.DataType.PeriodNoEnd;
 
@@ -77,9 +77,7 @@ XData Template [ MimeType = application/json ]
     "status":"completed",
     "intent":"order",
     "medicationCodeableConcept":"#(..MedicationCodeableConcept(FHIRTemplate.DataType.CodeableConcept))#",
-    "subject":{
-        "reference":"urn:uuid:#(..Patient)#"
-    },
+    "subject":"#(..Patient(FHIRTemplate.Reference))#",
     "authoredOn":"#(..AuthoredOn)#",
     "dosageInstruction": [
         {

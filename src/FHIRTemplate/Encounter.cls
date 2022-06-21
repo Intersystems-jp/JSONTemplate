@@ -52,7 +52,7 @@ XData Template [ MimeType = application/json ]
     "hospitalization":{
         "origin":"#(..hospitalizationOrigin(Reference))#",
         "admitSource": "#(..admitSource(FHIRCustom.CodeableConcept.AdmitSource))#",
-        "dischargeDisposition": "#(..dischargeDisposition(FHIRCustom.CodableConcept.DischargeCode))#"
+        "dischargeDisposition": "#(..dischargeDisposition(FHIRCustom.CodeableConcept.DischargeCode))#"
     }
 }
 }

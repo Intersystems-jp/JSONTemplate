@@ -22,14 +22,14 @@ Property Category As FHIRTemplate.DataType.CodeableConcept;
 
 Property Description As %String(MAXLEN = 10000);
 
-/// Patient のUUID
-Property Patient As %String;
+/// Patient
+Property Patient As FHIRTemplate.Patient;
 
-/// EncounterのUUID
-Property Encounter As %String;
+/// Encounter
+Property Encounter As FHIRTemplate.Encounter;
 
-/// PractitionerのUUID
-Property Practitioner As %String;
+/// Practitioner
+Property Practitioner As FHIRTemplate.Practitioner;
 
 Property Period As FHIRTemplate.DataType.Period;
 
@@ -57,17 +57,11 @@ XData Template [ MimeType = application/json ]
     "category": [ "#(..Category(FHIRTemplate.DataType.CodeableConcept))#"],
     "title":"退院時の方針",
     "description":"#(..Description)#",
-    "subject": {
-        "reference": "urn:uuid:#(..Patient)#"
-    },
-    "encounter": {
-        "reference": "urn:uuid:#(..Encounter)#"
-    },
+    "subject":"#(..Patient(FHIRTemplate.Reference))#",
+    "encounter": "#(..Encounter(FHIRTemplate.Reference))#",
     "period": "#(..Period)#",
     "created":"#(..CreationTime)#",
-    "author":{
-        "reference":"urn:uuid:#(..Practitioner)#"
-    }
+    "author":"#(..Practitioner(FHIRTemplate.Reference))#"
 }
 }
 

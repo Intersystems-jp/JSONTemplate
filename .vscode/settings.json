@@ -1,6 +1,42 @@
 {
     "objectscript.conn": {
         "active": true,
-        "ns":"ENSDEMO"
+        "ns":"TEST",
+        "server": "test"  
+    },
+    "intersystems.servers": {
+        "test":{
+            "webServer": {
+                "scheme": "http",
+                "host": "127.0.0.1",
+                "port": 52773,
+            },
+            "username": "SuperUser"
+        },
+        "default~iris": {
+            "webServer": {
+                "scheme": "http",
+                "host": "127.0.0.1",
+                "port": 52773
+            },
+            "description": "Connection to local InterSystems IRIS™ installed with default settings."
+        },
+        "default~cache": {
+            "webServer": {
+                "scheme": "http",
+                "host": "127.0.0.1",
+                "port": 57772
+            },
+            "description": "Connection to local InterSystems Caché installed with default settings."
+        },
+        "default~ensemble": {
+            "webServer": {
+                "scheme": "http",
+                "host": "127.0.0.1",
+                "port": 57772
+            },
+            "description": "Connection to local InterSystems Ensemble installed with default settings."
+        },
+        "/default": "default~iris"
     }
 }
