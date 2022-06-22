@@ -9,8 +9,12 @@ Class FHIRCustom.Evidence Extends FHIRTemplate.ResourceBase
 XData Template [ MimeType = application/json ]
 {
 {
-	"code": "#(..code)#",
-  "detail": "#(..detail)#"
+	"code": [
+    "#(..code)#"
+  ],
+  "detail": [
+    "#(..detail(FHIRTemplate.Reference))#"
+  ]
 }
 }
 
