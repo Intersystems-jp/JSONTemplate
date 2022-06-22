@@ -85,7 +85,6 @@ ClassMethod Bundle(input As %DynamicObject, ByRef json As %DynamicObject, ByRef 
         set bundle=##class(FHIRCustom.BundlePatientObservation).%New()
 
         //Patient情報取得
-        //set sql="SELECT JSON_OBJECT('PatientId':PID, 'FirstName':Given, 'LastName':Family, 'FirstNameKana':GivenKana, 'LastNameKana':FamilyKana, 'DOB':DOB, 'PostalCode':Zip, 'Address':Pref||City||Address, 'Phone':Tel, 'Gender':Gender) As json FROM ISJHospital.Patient where PID=?"
         set sql="SELECT JSON_OBJECT('PatientId':PID, 'FirstName':Given, 'LastName':Family, 'FirstNameKana':GivenKana, 'LastNameKana':FamilyKana, 'DOB':DOB, 'Phone':Tel, 'Gender':Gender,'postalCode':Zip,'state':Pref,'city':City,'line':Address) As json FROM ISJHospital.Patient where PID=?"
         $$$ThrowOnError(##class(FHIRFacade.CollectData).RunQuery(sql,.rset,input.PID))
         if rset.%Size()=0 {
