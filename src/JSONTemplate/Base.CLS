@@ -181,7 +181,7 @@ Method %OnNew(initvalue As %DynamicObject = "") As %Status [ CodeMode = objectge
                     do %code.WriteLine(" if $isobject(initvalue."_pdef.Name_") { if 'initvalue."_pdef.Name_".%Extends(""%Library.DynamicArray"") { set ret=$$$ERROR(5001,""プロパティ"_pdef.Name_"はリストコレクションです"") quit }")
                     do %code.WriteLine("   set iter=initvalue."_pdef.Name_".%GetIterator() while iter.%GetNext(.mkey,.mval) { do .."_pdef.Name_".Insert(mval) }}")
                 } else {
-                    do %code.WriteLine(" set .."_pdef.Name_"=initvalue."_pdef.Name)
+                    do %code.WriteLine(" set:initvalue.%IsDefined("""_pdef.Name_""") .."_pdef.Name_"=initvalue."_pdef.Name)
                 }
             }
         } else {
