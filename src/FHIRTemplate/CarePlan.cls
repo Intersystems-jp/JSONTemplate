@@ -65,4 +65,16 @@ XData Template [ MimeType = application/json ]
 }
 }
 
+Method GetResources(br As FHIRTemplate.Util.BundleResource) As %Integer
+{
+    // 自分自身を登録
+    set ret=##super(br)
+    quit:ret<1 ret // 既に登録されていれば終了
+
+    //関連リソースの取り込み
+    do:$isobject(..Patient) ..Patient.GetResources(br)
+    do:$isobject(..Encounter) ..Encounter.GetResources(br)
+    do:$isobject(..Practitioner) ..Practitioner.GetResources(br)
+}
+
 }

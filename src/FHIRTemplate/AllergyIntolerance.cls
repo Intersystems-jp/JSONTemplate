@@ -3,12 +3,16 @@ Class FHIRTemplate.AllergyIntolerance Extends FHIRTemplate.Resource
 
 Parameter ResourceType = "AllergyIntolerance";
 
+/// FHIRCustom.ClinicalStatus利用時未使用
 Parameter ClinicalStatusCode = "active,inactive,resolved";
 
+/// FHIRCustom.ClinicalStatus利用時未使用
 Parameter ClinicalStatusDisplay = "現存,非現存,解消";
 
+/// FHIRCustom.VerificationStatus利用時未使用
 Parameter VerificationStatusCode = "unconfirmed,confirmed,refuted,entered-in-error";
 
+/// FHIRCustom.VerificationStatus利用時未使用
 Parameter VerificationStatusDisplay = "未確認,確認済,否定,エラー";
 
 Property TextDiv As %String(MAXLEN = 10000);
@@ -16,9 +20,11 @@ Property TextDiv As %String(MAXLEN = 10000);
 /// identifier.value
 Property IdentifierValue As %String;
 
-Property ClinicalStatus As FHIRTemplate.DataType.CodeableConcept;
+/// FHIRCustom.DataType.ClinicalStatus利用の為タイプを%Stringに設定
+Property ClinicalStatus As %String;
 
-Property VerificationStatus As FHIRTemplate.DataType.CodeableConcept;
+/// FHIRCustom.DataType.VerificationStatus利用の為タイプを%Stringに設定
+Property VerificationStatus As %String;
 
 Property Type As %String(VALUELIST = ",allergy,intolerance");
 
@@ -53,8 +59,8 @@ XData Template [ MimeType = application/json ]
         "value":"#(..IdentifierValue)#"
         }
     ],
-    "clinicalStatus": "#(..ClinicalStatus)#",
-    "verificationStatus":"#(..VerificationStatus)#",
+    "clinicalStatus": "#(..ClinicalStatus(FHIRCustom.CodeableConcept.ClinicalStatus))#",
+    "verificationStatus":"#(..VerificationStatus(FHIRCustom.CodeableConcept.VerificationStatus))#",
     "type":"#(..Type)#",
     "category": ["#(..Category)#"],
     "criticality":"#(..Criticality)#",
@@ -62,6 +68,17 @@ XData Template [ MimeType = application/json ]
     "patient":"#(..Patient(FHIRTemplate.Reference))#",
     "encounter":"#(..Encounter(FHIRTemplate.Reference))#"
 }
+}
+
+Method GetResources(br As FHIRTemplate.Util.BundleResource) As %Integer
+{
+    // 自分自身を登録
+    set ret=##super(br)
+    quit:ret<1 ret // 既に登録されていれば終了
+
+    //関連リソースの取り込み
+    do:$isobject(..Patient) ..Patient.GetResources(br)
+    do:$isobject(..Encounter) ..Encounter.GetResources(br)
 }
 
 }
