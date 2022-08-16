@@ -12,7 +12,7 @@ XData Template [ MimeType = application/json ]
 {
   "resourceType": "#(..#ResourceType)#",
   "meta": {
-    "profile": [ "#(..ProfileURI)#" ]
+    "profile": [ "#(..#ProfileURI)#" ]
   },
   "identifier": [
     {
@@ -93,5 +93,7 @@ Property PatientId As %String;
 Property Address As FHIRTemplate.DataType.Address;
 
 Property MaritalStatus As FHIRTemplate.DataType.CodeableConcept;
+
+Parameter ProfileURI = "http://jpfhir.jp/fhir/eClinicalSummary/StructureDefinition/JP_Patient_eClinicalSummary";
 
 }

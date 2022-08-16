@@ -98,14 +98,15 @@ ClassMethod Process(obj As %RegisteredObject, ByRef ret As %Status) As %DynamicA
     try {
         set %debug=$get(%debug,0)
         // プロパティの一覧と型を取得
-        set ret=##class(JSONTemplate.Generator).GetPropertyList(%compiledclass,.props)
+        set generator=##class(JSONTemplate.Generator).%New()
+        set ret=generator.GetPropertyList(%compiledclass)
         quit:$$$ISERR(ret)
 
         // パラメータの一覧を取得
         set key="" for {
             set pdef=%compiledclass.Parameters.GetNext(.key)
             quit:key=""
-            set params(pdef.Name)=$lb(pdef.Default)
+            set generator.params(pdef.Name)=$lb(pdef.Default)
         }
         do %code.WriteLine(" set ret=$$$OK try {")
 
@@ -127,19 +128,19 @@ ClassMethod Process(obj As %RegisteredObject, ByRef ret As %Status) As %DynamicA
             quit
         }
         // JSON出力処理の生成
-        set code=##class(%Stream.TmpCharacter).%New()
-        //set code.TranslateTable="UTF8"
-        do ##class(Generator).InitJSONString()
-        set objstr=##class(Generator).SetJSONString(code,tpl)
-        set ret=##class(JSONTemplate.Generator).GenerateObject(code, "object",tpl,objstr,.params,.props)
+        //set code=##class(%Stream.TmpCharacter).%New()
+        ////set code.TranslateTable="UTF8"
+        //do ##class(Generator).InitJSONString()
+        set objstr=generator.SetJSONString(tpl)
+        set ret=generator.GenerateObject("object",tpl,objstr)
         quit:$$$ISERR(ret)
-        do code.Rewind()
-        while 'code.AtEnd {
-            set line=code.ReadLine()
+        do generator.outstream.Rewind()
+        while 'generator.outstream.AtEnd {
+            set line=generator.outstream.ReadLine()
             if $zstrip(line,"<>W")?1"$tpl"1.N {
                 // $tplで始まる行があれば、JSON文字列出力
                 write:%debug "line "_line,!
-                do %code.WriteLine("  set "_$piece(line,"$",2)_"="_%jsonstring(+$piece(line,"$tpl",2)).%ToJSON())
+                do %code.WriteLine("  set "_$piece(line,"$",2)_"="_generator.jsonstring(+$piece(line,"$tpl",2)).%ToJSON())
             } else {
                 do %code.WriteLine("   "_line)
             }

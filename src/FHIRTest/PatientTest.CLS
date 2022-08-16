@@ -5,7 +5,6 @@ ClassMethod Test1()
 {
     #dim obj as FHIRTemplate.Patient
     set obj=##class(FHIRTemplate.Patient).%New()
-    set obj.ProfileURI="http://jpfhir.jp/fhir/eClinicalSummary/StructureDefinition/JP_Patient_eClinicalSummary"
     set obj.PatientId="11122"
     set obj.LastName="鈴木",obj.FirstName="喜朗"
     set obj.LastNameKana="スズキ",obj.FirstNameKana="ヨシロウ"

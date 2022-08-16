@@ -22,7 +22,7 @@ XData Template [ MimeType = application/json ]
             "p1":"1234",
             "o2":"#(..Obj2)#"
         },
-        "#(..Obj1)#",
+        "#(..Obj1(BaseTest4))#",
         "#(..List1)#"
     ],
     "a2":[
@@ -60,6 +60,7 @@ ClassMethod Test1(ByRef out)
     set obj.Param1="gggggg"
     set obj.Param2=1234.5
     set obj.CodeObj=##class(BaseCodeTest).GetByCode(1)
+    set obj.CodeData=2
     set obj.Obj1=##class(BaseTest2).%New({
         "Param1":"qqqqq",
         "Param2":1111
@@ -75,8 +76,8 @@ ClassMethod Test1(ByRef out)
     set obj1.Param2=4444    
     do obj.List2.Insert(obj1)
     set obj1=##class(BaseTest2).%New()
-    set obj1.Param1="list2 param1"
-    set obj1.Param2=4444    
+    set obj1.Param1="list3 param1"
+    set obj1.Param2=5555    
     do obj.List2.Insert(obj1)
 
     set ret=obj.OutputToDynamicObject(.out)
@@ -119,8 +120,7 @@ ClassMethod Test2()
     }
 }
 
-// CodeObjに直接コードを指定した場合
-
+/// CodeObjに直接コードを指定した場合
 ClassMethod Test3(ByRef out)
 {
     set obj=..%New()
