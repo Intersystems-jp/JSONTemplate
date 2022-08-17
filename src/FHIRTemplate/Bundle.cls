@@ -64,6 +64,8 @@ ClassMethod CreateFHIRDocument(composition As Composition, attester As Practitio
   
   // bundleリソース管理クラスのインスタンスを取得
   set br=##class(FHIRTemplate.Util.BundleResource).%New()
+  // Compositionリソースを登録
+  do br.AddResource(composition)
 
   // 文書法的責任者が指定されていればそのリソースも登録
   if $isobject(attester) {
