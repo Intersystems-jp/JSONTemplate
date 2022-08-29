@@ -12,8 +12,16 @@ XData Template [ MimeType = application/json ]
 {
 {
 	"fullUrl": "urn:uuid:#(..ResourceId)#",
-	"resource": "#($this)#"
+	"resource": "#($this)#",
+	"request": {
+		"method": "#(..requestMethod)#",
+		"url": "#(..requestUrl)#"
+	}
 }
 }
+
+Property requestMethod As %String;
+
+Property requestUrl As %String;
 
 }

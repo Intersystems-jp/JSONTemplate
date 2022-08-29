@@ -31,10 +31,10 @@ XData Template [ MimeType = application/json ]
 
 Parameter ResourceType = "Bundle";
 
-Parameter Profile = "jpfhir.jp/fhir/eDischargeSummary/StructureDefinition/JP_Bundle_eDischargeSummary";
+Parameter Profile = "http://jpfhir.jp/fhir/eDischargeSummary/StructureDefinition/JP_Bundle_eDischargeSummary";
 
 /// bundleタイプ
-Property type As %String;
+Property type As %String [ Required ];
 
 /// 作成時刻
 Property timeStamp As FHIRTemplate.DataType.TimeStamp;
@@ -54,6 +54,24 @@ Property signatureData As %String;
 /// 証明書データ
 /// 秘密鍵の証明書ファイルの内容
 Property CertificateData As %String;
+
+/// リクエストメソッド
+Property requestMethod As %String [ InitialExpression = "POST" ];
+
+ClassMethod OnPreProcess(obj As JSONTemplate.Base) As %Status
+{
+  // transactionモードの場合、各リソースにrequestMethod、requestURLを追加する
+  if obj.type="transaction" {
+    set key="" for {
+      set entry=obj.resource.GetNext(.key)
+      quit:key=""
+
+      set entry.requestMethod = obj.requestMethod
+      set entry.requestUrl = entry.#ResourceType
+    }
+  }
+  quit $$$OK
+}
 
 /// FHIRドキュメントの作成
 ClassMethod CreateFHIRDocument(composition As Composition, attester As Practitioner = "") As Bundle
