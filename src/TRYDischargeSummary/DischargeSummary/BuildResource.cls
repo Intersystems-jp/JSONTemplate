@@ -153,40 +153,40 @@ ClassMethod Bundle(input As %DynamicObject, ByRef json As %DynamicObject, fname 
         set sec322=##class(FHIRTemplate.Composition.section).%New()
         set sec322.title="入院詳細",sec322.code=322,sec322.textDiv="入院時の状況"
         do sec322.entry.Insert(composition.encounter)
-        do composition.section.Insert(sec322)        
+        do sec300.section.Insert(sec322)        
         set sec342=##class(FHIRTemplate.Composition.section).%New()
         set sec342.title="入院時診断",sec342.code=342,sec342.textDiv="入院時の診断内容"
         do sec342.entry.Insert(condition)
-        do composition.section.Insert(sec342) 
+        do sec300.section.Insert(sec342) 
         
         set sec510=##class(FHIRTemplate.Composition.section).%New()
         set sec510.title="アレルギー・不耐性反応",sec510.code=510,sec510.textDiv="アレルギー情報です"
         do sec510.entry.Insert(allergy)
-        do composition.section.Insert(sec510)
+        do sec300.section.Insert(sec510)
         set sec352=##class(FHIRTemplate.Composition.section).%New()
         set sec352.title="入院時主訴",sec352.code=352,sec352.textDiv="入院時主訴です。"
         do sec352.entry.Insert(condition)
-        do composition.section.Insert(sec352)
+        do sec300.section.Insert(sec352)
         set sec312=##class(FHIRTemplate.Composition.section).%New()
         set sec312.title="入院理由",sec312.code=312,sec312.textDiv="入院理由です。"
         do sec312.entry.Insert(encounter)
-        do composition.section.Insert(sec312)
+        do sec300.section.Insert(sec312)
         set sec362=##class(FHIRTemplate.Composition.section).%New()
         set sec362.title="入院時現病歴",sec362.code=362,sec362.textDiv="入院時現病歴です。"
         do sec362.entry.Insert(condition)
-        do composition.section.Insert(sec362)
+        do sec300.section.Insert(sec362)
         set sec324=##class(FHIRTemplate.Composition.section).%New()
         set sec324.title="退院時詳細",sec324.code=324,sec324.textDiv="退院時詳細です。"
         do sec324.entry.Insert(encounter)
-        do composition.section.Insert(sec324)
+        do sec300.section.Insert(sec324)
         set sec444=##class(FHIRTemplate.Composition.section).%New()
         set sec444.title="退院時投薬指示",sec444.code=444,sec444.textDiv="退院時投薬指示です。"
         do sec444.entry.Insert(medicationrequest)
-        do composition.section.Insert(sec444)
+        do sec300.section.Insert(sec444)
         set sec424=##class(FHIRTemplate.Composition.section).%New()
         set sec424.title="退院時方針指示",sec424.code=424,sec424.textDiv="退院時方針指示です。"
         do sec424.entry.Insert(careplan)
-        do composition.section.Insert(sec424)
+        do sec300.section.Insert(sec424)
 
         // FHIRドキュメントの作成（Bundle作成）
         set bundle=##class(FHIRTemplate.Bundle).CreateFHIRDocument(composition,practitioner)
@@ -207,7 +207,6 @@ ClassMethod Bundle(input As %DynamicObject, ByRef json As %DynamicObject, fname 
         //set bundle.PractitionerResourceId=practitioner.ResourceId
 
         set bundle.signatureDate=$Horolog
-
         /*
         //以下DBに仮登録したい場合利用
         //QuickStreamに作成したBundleリソースを保存
