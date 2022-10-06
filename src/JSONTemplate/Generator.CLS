@@ -253,9 +253,9 @@ Method OutputObject(info As %List, path As %String) As %Status
         //do ..outstream.WriteLine(" if $isobject("_propstr_") {")
         // ListプロパティがDynamicArrayに出来ないので削除
         //do ..outstream.WriteLine(" if "_propstr_".%Extends(""%Library.DynamicArray"") {")
-        //do ..outstream.WriteLine("   set iter="_propstr_".%GetIterator() for loop=1:1 { quit:'iter.%GetNext(.k,.v)  set dobj=##class("_templateclass_").Process(v,.ret) continue:dobj.%Size()=0  do "_base_"%Push(dobj) quit:$$$ISERR(ret) } quit:$$$ISERR(ret)")
+        //do ..outstream.WriteLine("   set iter="_propstr_".%GetIterator() for loop=1:1 { quit:'iter.%GetNext(.k,.v)  set dobj=##class("_templateclass_").Process(v,.ret) quit:$$$ISERR(ret)  continue:dobj.%Size()=0  do "_base_"%Push(dobj) quit:$$$ISERR(ret) } quit:$$$ISERR(ret)")
         //do ..outstream.WriteLine(" } else {")
-        do ..outstream.WriteLine("   set key="""" for loop=1:1 { set obj2="_propstr_".GetNext(.key) quit:key=""""  set dobj="_$select($lg(info,8)'="":"##class("_templateclass_")",1:"obj2")_".Process(obj2,.ret) continue:dobj.%Size()=0  do "_base_"%Push(dobj) quit:$$$ISERR(ret) } quit:$$$ISERR(ret)")
+        do ..outstream.WriteLine("   set key="""" for loop=1:1 { set obj2="_propstr_".GetNext(.key) quit:key=""""  set dobj="_$select($lg(info,8)'="":"##class("_templateclass_")",1:"obj2")_".Process(obj2,.ret) quit:$$$ISERR(ret)  continue:dobj.%Size()=0  do "_base_"%Push(dobj) quit:$$$ISERR(ret) } quit:$$$ISERR(ret)")
         //do ..outstream.WriteLine(" }}")
     } else {
         // プロパティがオブジェクトの場合
