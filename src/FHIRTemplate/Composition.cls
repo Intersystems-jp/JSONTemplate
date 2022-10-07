@@ -14,7 +14,7 @@ XData Template [ MimeType = application/json ]
   },
   "extension":[
     {
-    "url":"http://hl7.org/fhir/StructureDefinition/composition-clinicaldocumentversionNumber",
+    "url":"http://hl7.org/fhir/StructureDefinition/composition-clinicaldocument-versionNumber",
     "valueString":"#(..docVer)#"
     }
   ],
