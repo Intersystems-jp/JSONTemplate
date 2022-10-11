@@ -30,11 +30,11 @@ ClassMethod Test1(ByRef body)
     set sec322=##class(FHIRTemplate.Composition.section).%New()
     set sec322.title="入院詳細",sec322.code=322,sec322.textDiv="入院時の状況"
     do sec322.entry.Insert(cobj.encounter)
-    do cobj.section.Insert(sec322)
+    do sec300.section.Insert(sec322)
     set sec342=##class(FHIRTemplate.Composition.section).%New()
     set sec342.title="入院時診断",sec342.code=342,sec342.textDiv="入院時の診断内容"
     do sec342.entry.Insert(..CreateCondition(cobj.subject,cobj.encounter))
-    do cobj.section.Insert(sec342)
+    do sec300.section.Insert(sec342)
 
     // FHIRドキュメントの作成
     set bundle=##class(FHIRTemplate.Bundle).CreateFHIRDocument(cobj,..CreateAttester())
@@ -52,6 +52,32 @@ ClassMethod Test1(ByRef body)
     
     // オブジェクトの出力
     set ret=bundle.OutputToFile("c:\temp\bundle-test.json")
+    if $$$ISOK(ret) {
+        use 0 write "正常終了",!
+    }else {
+        use 0 write "エラー発生",!
+        do $SYSTEM.OBJ.DisplayError(ret)
+    }
+}
+
+ClassMethod Test2()
+{
+    #dim obj as FHIRTemplate.Bundle
+    set obj=##class(FHIRTemplate.Bundle).%New()
+    set obj.timeStamp=$horolog
+    set obj.type="transaction"
+
+    set pobj=..CreatePatient()
+    do obj.resource.Insert(pobj)
+    set eobj=..CreateEncounter(pobj)
+    do obj.resource.Insert(eobj)
+    set probj=..CreateAuthor()
+    do obj.resource.Insert(probj)
+    set oobj=..CreateAuthorOrg()
+    do obj.resource.Insert(oobj)
+
+    // オブジェクトの出力
+    set ret=obj.OutputToFile("c:\temp\bundle-transaction-test.json")
     if $$$ISOK(ret) {
         use 0 write "正常終了",!
     }else {
