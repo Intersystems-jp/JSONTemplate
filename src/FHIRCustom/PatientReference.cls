@@ -9,7 +9,8 @@ XData Template [ MimeType = application/json ]
 {
 {
 	"reference": "urn:uuid:#(..ResourceId)#",
-  "display": "#(..LastName)#　#(..FirstName)#"
+  "display": "#(..LastName)#　#(..FirstName)#",
+  "type": "#(..#ResourceType)#"
 }
 }
 
