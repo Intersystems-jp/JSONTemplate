@@ -80,7 +80,10 @@ Method GenerateObject(type As %String, template As %DynamicAbstractObject, path 
                         do ..OutputParameter($lg(info,2),path_"."_$select(type="object":mkey,1:"%Get("_mkey_")"))
                         do template.%Set(mkey,"")
                     } else {
-                        do template.%Set(mkey,$lg(info,3)) // 値を代入してしまう
+                        // テンプレートを変更した際にパラメータ値が異なる点を修正
+                        //do template.%Set(mkey,$lg(info,3)) // 値を代入してしまう
+                        do ..OutputParameter($lg(info,2),path_"."_$select(type="object":mkey,1:"%Get("_mkey_")"))
+                        do template.%Set(mkey,"")
                     }
                     continue
                 }
