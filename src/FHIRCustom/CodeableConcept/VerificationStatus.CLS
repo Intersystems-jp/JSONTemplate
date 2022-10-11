@@ -1,7 +1,7 @@
 Class FHIRCustom.CodeableConcept.VerificationStatus Extends (%Persistent, FHIRTemplate.DataType.CodeableConceptBase, FHIRTemplate.Util.CodeTable)
 {
 
-Parameter CodeSystem = "http://terminology.hl7.org/CodeSystem/condition-ver-status";
+Parameter CodeSystem = "http://terminology.hl7.org/CodeSystem/allergyintolerance-verification";
 
 Index IDKeyIdx On code [ IdKey, Unique ];
 

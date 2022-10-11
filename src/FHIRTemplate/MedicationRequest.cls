@@ -83,11 +83,11 @@ XData Template [ MimeType = application/json ]
         {
         "extension": [
             {
-                "url":"http://jpfhir.jp/fhir/core/StructureDefinition/JP_MedicationRequest_DosageInstruction_PeriodOfUse",
+                "url":"http://jpfhir.jp/fhir/core/Extension/StructureDefinition/JP_MedicationRequest_DosageInstruction_PeriodOfUse",
                 "valuePeriod": "#(..DosageInstructionPeriod(FHIRTemplate.DataType.PeriodNoEnd))#"
             },
             {
-                "url":"http://jpfhir.jp/fhir/core/StructureDefinition/JP_MedicationRequest_DosageInstruction_UsageDuration",
+                "url":"http://jpfhir.jp/fhir/core/Extension/StructureDefinition/JP_MedicationRequest_DosageInstruction_UsageDuration",
                 "valueDuration":"#(..DosageInstructionDuration(FHIRTemplate.DataType.Duration))#"
             }
         ],
