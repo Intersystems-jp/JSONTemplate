@@ -400,7 +400,7 @@ MEDIS標準病名マスター病名交換用コード nmain5xx.txt をダウン�
 3. 修飾語交換用コードの読み込み<br/>
 MEDIS標準病名マスター修飾語交換用コード mdfy5xx.txt をダウンロードし、以下のコマンドでFHIRCustom.DB.ModifierCodeクラスにロードします。
 
-    `do ##class(FHIRCustom.DB.ByomeiCode).ImportData("c:\temp\mdfy5xx.txt")`
+    `do ##class(FHIRCustom.DB.ModifierCode).ImportData("c:\temp\mdfy5xx.txt")`
 
 
 4. 登録データの一括ロード<br/>

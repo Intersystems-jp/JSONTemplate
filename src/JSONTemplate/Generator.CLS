@@ -339,6 +339,9 @@ Method OutputProperty(info As %List, path As %String) As %Status
             } elseif ",INTEGER,NUMERIC,DOUBLE,BIGINT,"[(","_$lg(info,4)_",") {
                 // 数値型の場合、+演算子を使って数値化
                 do ..outstream.WriteLine(" set "_path_"=+("_propstr_")")
+            } elseif $lg(info,4)="BOOLEAN" {
+                // Boolean型の場合、True,falseに変換
+                do ..outstream.WriteLine(" do "_base_"%Set("""_current_""","_propstr_",""boolean"")")
             } else {
                 do ..outstream.WriteLine(" set "_path_"="_propstr)
             }

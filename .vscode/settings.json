@@ -1,17 +1,17 @@
 {
     "objectscript.conn": {
         "active": true,
-        "ns":"TEST",
-        "server": "test"  
+        "ns": "FHIRSERVER",
+        "server": "irisdev"
     },
     "intersystems.servers": {
-        "test":{
+        "irisdev":{
             "webServer": {
                 "scheme": "http",
                 "host": "127.0.0.1",
-                "port": 52773,
+                "port": 57772,
             },
-            "username": "SuperUser"
+            "username": "_system"
         },
         "default~iris": {
             "webServer": {
