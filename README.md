@@ -119,13 +119,13 @@ ResourceIdに"**xxxxxx-xxxx-xx**"が代入されている場合、以下のよ�
 例2:
 
     {
-        "text": "#(..LastName)#　#(..FirstName)#"
+        "text": "#(..LastName)# #(..FirstName)#"
     }
 
 以下のように変換されます
 
     {
-        "text": "鈴木　喜朗"
+        "text": "鈴木 喜朗"
     }
 
 ## Arrayにプロパティ値を指定する場合
