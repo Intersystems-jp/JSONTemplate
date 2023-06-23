@@ -16,7 +16,8 @@ JSONテンプレートエンジンを使用するにはJSONTemplate.Baseクラ�
       {
         "use": "official",
         "text": "#(..LastName)# #(..FirstName)#",
-        "family": "#(..LastName)#" "given": [
+        "family": "#(..LastName)#",
+        "given": [
             "#(..FirstName)#"
         ]
       }
