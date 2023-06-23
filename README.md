@@ -14,11 +14,11 @@ JSONテンプレートエンジンを使用するにはJSONTemplate.Baseクラ�
     XData Template [ MimeType = application/json ]
     {
       {
-        "use": "official",
-        "text": "#(..LastName)# #(..FirstName)#",
-        "family": "#(..LastName)#" "given": [
-          "#(..FirstName)#"
-        ]
+        "use": "official",
+        "text": "#(..LastName)# #(..FirstName)#",
+        "family": "#(..LastName)#" "given": [
+            "#(..FirstName)#"
+        ]
       }
     }
 ここで、#(..LastName)#、#(..FirstName)#はそれぞれLastName,FirstNameプロパティ値を代入します。
