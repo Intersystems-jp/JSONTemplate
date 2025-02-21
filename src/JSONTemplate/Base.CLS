@@ -72,6 +72,7 @@ Method OutputToStream(stream As %Stream) As %Status
 
         #dim out as JSONTemplate.Formatter
         set out=##class(JSONTemplate.Formatter).%New()
+        set out.Indent=0,out.LineTerminator=""
         set ret=out.FormatToStream(tpl,.stream)
     } catch err {
         set ret=err.AsStatus()
