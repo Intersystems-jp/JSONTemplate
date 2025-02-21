@@ -326,8 +326,9 @@ Method OutputProperty(info As %List, path As %String) As %Status
                 do ..outstream.WriteLine(" do:"_propstr_"'="""" "_base_"%Push(##class("_%class.Name_")."_$lg(info,2)_"LogicalToDisplay("_propstr_")")
             } elseif ",INTEGER,DECIMAL,NUMERIC,DOUBLE,BIGINT,"[(","_$lg(info,4)_",") {
                 // 数値型でSCALEがNULLでない場合、$fnumber()演算子を使って数値化
+                // $fnumberを使用すると文字列となるため、先頭に$c(0)を付与し、Formatterで$c(0)があれば削除する
                 if $lg(info,8)'="" {
-                    do ..outstream.WriteLine(" do:"_propstr_"'="""" "_base_"%Push($fnumber("_propstr_","""","_$lg(info,8)_"))")
+                    do ..outstream.WriteLine(" do:"_propstr_"'="""" "_base_"%Push($c(0)_$fnumber("_propstr_","""","_$lg(info,8)_"))")
                 } else {
                     do ..outstream.WriteLine("  do:"_propstr_"'="""" "_base_"%Push(+("_propstr_"))")
                 }
@@ -351,8 +352,9 @@ Method OutputProperty(info As %List, path As %String) As %Status
                 do ..outstream.WriteLine(" set "_path_"=##class("_%class.Name_")."_$lg(info,2)_"LogicalToDisplay("_propstr_")")
             } elseif ",INTEGER,DECIMAL,NUMERIC,DOUBLE,BIGINT,"[(","_$lg(info,4)_",") {
                 // 数値型でSCALEがNULLでない場合、$fnumber()演算子を使って数値化
+                // $fnumberを使用すると文字列となるため、先頭に$c(0)を付与し、Formatterで$c(0)があれば削除する
                 if $lg(info,8)'="" {
-                    do ..outstream.WriteLine(" set "_path_"=$fnumber("_propstr_","""","_$lg(info,8)_")")
+                    do ..outstream.WriteLine(" set "_path_"=$c(0)_$fnumber("_propstr_","""","_$lg(info,8)_")")
                 } else {
                     do ..outstream.WriteLine(" set "_path_"=+("_propstr_")")
                 }
