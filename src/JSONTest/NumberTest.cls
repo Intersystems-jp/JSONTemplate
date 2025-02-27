@@ -60,4 +60,15 @@ ClassMethod displayNumbers(num)
     do obj.OutputToDevice()
 }
 
+ClassMethod ExportDynamicObject(num, ByRef dyn)
+{
+    set obj=..%New()
+    set obj.Num1=num
+    set obj.Num2=num,obj.Num21=num
+    set obj.Num3=num,obj.Num31=num,obj.Num32=num
+    set obj.Num4=num,obj.Num41=num
+    set obj.Num5=num,obj.Num51=num
+    do obj.OutputToDynamicObject(.dyn)
+}
+
 }

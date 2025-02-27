@@ -256,9 +256,9 @@ Method OutputObject(info As %List, path As %String) As %Status
         //do ..outstream.WriteLine(" if $isobject("_propstr_") {")
         // ListプロパティがDynamicArrayに出来ないので削除
         //do ..outstream.WriteLine(" if "_propstr_".%Extends(""%Library.DynamicArray"") {")
-        //do ..outstream.WriteLine("   set iter="_propstr_".%GetIterator() for loop=1:1 { quit:'iter.%GetNext(.k,.v)  set dobj=##class("_templateclass_").Process(v,.ret) quit:$$$ISERR(ret)  continue:dobj.%Size()=0  do "_base_"%Push(dobj) quit:$$$ISERR(ret) } quit:$$$ISERR(ret)")
+        //do ..outstream.WriteLine("   set iter="_propstr_".%GetIterator() for loop=1:1 { quit:'iter.%GetNext(.k,.v)  set dobj=##class("_templateclass_").Process(v,.ret,format) quit:$$$ISERR(ret)  continue:dobj.%Size()=0  do "_base_"%Push(dobj) quit:$$$ISERR(ret) } quit:$$$ISERR(ret)")
         //do ..outstream.WriteLine(" } else {")
-        do ..outstream.WriteLine("   set key="""" for loop=1:1 { set obj2="_propstr_".GetNext(.key) quit:key=""""  set dobj="_$select($lg(info,9)'="":"##class("_templateclass_")",1:"obj2")_".Process(obj2,.ret) quit:$$$ISERR(ret)  continue:dobj.%Size()=0  do "_base_"%Push(dobj) quit:$$$ISERR(ret) } quit:$$$ISERR(ret)")
+        do ..outstream.WriteLine("   set key="""" for loop=1:1 { set obj2="_propstr_".GetNext(.key) quit:key=""""  set dobj="_$select($lg(info,9)'="":"##class("_templateclass_")",1:"obj2")_".Process(obj2,.ret,format) quit:$$$ISERR(ret)  continue:dobj.%Size()=0  do "_base_"%Push(dobj) quit:$$$ISERR(ret) } quit:$$$ISERR(ret)")
         //do ..outstream.WriteLine(" }}")
     } else {
         // プロパティがオブジェクトの場合
@@ -266,7 +266,7 @@ Method OutputObject(info As %List, path As %String) As %Status
 
         // プロパティにDynamicObjectが割り当てられれている場合
         do ..outstream.WriteLine(" if "_propstr_".%Extends(""%Library.DynamicObject"") {")
-        do ..outstream.WriteLine("   set dobj=##class("_templateclass_").Process("_propstr_",.ret) quit:$$$ISERR(ret)")
+        do ..outstream.WriteLine("   set dobj=##class("_templateclass_").Process("_propstr_",.ret,format) quit:$$$ISERR(ret)")
         if $lg(info)="this" {
             // $thisの場合、自己参照に陥るのを防ぐため、プロパティの型が自分自身と同じかをチェック
             do ..outstream.WriteLine(" } elseif "_propstr_".%ClassName(1)="""_$lg(info,3)_""" {")
@@ -274,7 +274,7 @@ Method OutputObject(info As %List, path As %String) As %Status
         }
         // プロパティ値が指定されたテンプレートクラスを継承している場合
         do ..outstream.WriteLine(" } elseif "_propstr_".%Extends("""_$lg(info,3)_""") {")
-        do ..outstream.WriteLine("   set dobj="_templatestr_".Process("_propstr_",.ret)  quit:$$$ISERR(ret)")
+        do ..outstream.WriteLine("   set dobj="_templatestr_".Process("_propstr_",.ret,format)  quit:$$$ISERR(ret)")
         do ..outstream.WriteLine(" } else { set ret=$$$ERROR(5001,""プロパティ"_$lg(info,2)_"の型が誤っています class=""_"_propstr_".%ClassName(1)) quit }")
 
         // プロパティへの登録
@@ -320,7 +320,7 @@ Method OutputProperty(info As %List, path As %String) As %Status
         if current["(" {
             // Arrayの場合
             if $lg(info,9)'="" {
-                do ..outstream.WriteLine(" if "_propstr_"'="""" { set objtmp=##class("_$lg(info,9)_").GetByCode("_propstr_") do:"_propstr_"'="""" "_base_"%Push(##class("_$lg(info,9)_").Process(objtmp,.ret)) quit:$$$ISERR(ret) }")
+                do ..outstream.WriteLine(" if "_propstr_"'="""" { set objtmp=##class("_$lg(info,9)_").GetByCode("_propstr_") do:"_propstr_"'="""" "_base_"%Push(##class("_$lg(info,9)_").Process(objtmp,.ret,format)) quit:$$$ISERR(ret) }")
             } elseif $lg(info,7) {
                 // DISPLAYLIST,VALUELISTがある場合
                 do ..outstream.WriteLine(" do:"_propstr_"'="""" "_base_"%Push(##class("_%class.Name_")."_$lg(info,2)_"LogicalToDisplay("_propstr_")")
@@ -328,7 +328,7 @@ Method OutputProperty(info As %List, path As %String) As %Status
                 // 数値型でSCALEがNULLでない場合、$fnumber()演算子を使って数値化
                 // $fnumberを使用すると文字列となるため、先頭に$c(0)を付与し、Formatterで$c(0)があれば削除する
                 if $lg(info,8)'="" {
-                    do ..outstream.WriteLine(" do:"_propstr_"'="""" "_base_"%Push($c(0)_$fnumber("_propstr_","""","_$lg(info,8)_"))")
+                    do ..outstream.WriteLine(" do:"_propstr_"'="""" "_base_"%Push($select(format:$c(0)_$fnumber("_propstr_","""","_$lg(info,8)_"),1:+("_propstr_")))")
                 } else {
                     do ..outstream.WriteLine("  do:"_propstr_"'="""" "_base_"%Push(+("_propstr_"))")
                 }
@@ -343,7 +343,7 @@ Method OutputProperty(info As %List, path As %String) As %Status
             if $lg(info,9)'="" {
                 // 出力用テンプレートクラスが指定されている場合GetByCodeでオブジェクトを取得
                 do ..outstream.WriteLine(" set objtmp=$select("_propstr_"'="""":##class("_$lg(info,9)_").GetByCode("_propstr_"),1:"""")")
-                do ..outstream.WriteLine(" if $isobject(objtmp) { set "_path_"=##class("_$lg(info,9)_").Process(objtmp,.ret) } else { do "_base_"%Remove("""_$piece(path,".",*)_""") }")
+                do ..outstream.WriteLine(" if $isobject(objtmp) { set "_path_"=##class("_$lg(info,9)_").Process(objtmp,.ret,format) } else { do "_base_"%Remove("""_$piece(path,".",*)_""") }")
                 quit
             }
             do:'$lg(info,5) ..outstream.WriteLine(" if "_propstr_"="""" { do "_base_"%Remove("""_$piece(path,".",*)_""") } else {")
@@ -354,7 +354,7 @@ Method OutputProperty(info As %List, path As %String) As %Status
                 // 数値型でSCALEがNULLでない場合、$fnumber()演算子を使って数値化
                 // $fnumberを使用すると文字列となるため、先頭に$c(0)を付与し、Formatterで$c(0)があれば削除する
                 if $lg(info,8)'="" {
-                    do ..outstream.WriteLine(" set "_path_"=$c(0)_$fnumber("_propstr_","""","_$lg(info,8)_")")
+                    do ..outstream.WriteLine(" set "_path_"=$select(format:$c(0)_$fnumber("_propstr_","""","_$lg(info,8)_"),1:+("_propstr_"))")
                 } else {
                     do ..outstream.WriteLine(" set "_path_"=+("_propstr_")")
                 }

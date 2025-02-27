@@ -84,13 +84,13 @@ Method OutputToStream(stream As %Stream) As %Status
 Method OutputToDynamicObject(ByRef obj As %DynamicAbstractObject) As %Status
 {
     set ret=$$$OK
-    set obj=..Process($this,.ret)
+    set obj=..Process($this,.ret,0)
     quit ret
 }
 
 /// テンプレートからJSONデータを出力
 /// テンプレートを元にプロパティを挿入したJSONオブジェクトを返す
-ClassMethod Process(obj As %RegisteredObject, ByRef ret As %Status) As %DynamicAbstractObject [ CodeMode = objectgenerator ]
+ClassMethod Process(obj As %RegisteredObject, ByRef ret As %Status, format As %Boolean = 1) As %DynamicAbstractObject [ CodeMode = objectgenerator ]
 {
     // Abstractクラスの場合は生成しない
     if %class.Abstract {
