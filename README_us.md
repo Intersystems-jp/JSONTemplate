@@ -274,6 +274,17 @@ Template:
 
 Output becomes an array with both objects.
 
+```json
+    "list": [
+        {
+            "name": "object1",
+            "data": "obj1data"
+        },{
+            "name": "object2",
+            "data": "obj2data"
+        }
+    ]
+```
 ---
 
 ### 2) Output list collection as an array
@@ -292,6 +303,17 @@ Template:
 
 It will output all list items as a JSON array.
 
+```json
+    "list": [
+        {
+            "name": "item1",
+            "data": "data1"
+        },{
+            "name": "item2",
+            "data": "data2"
+        }
+    ]
+```
 ---
 
 ## Using a Different Template Class for a Property
@@ -305,6 +327,15 @@ Example: In a Composition template, output `patient` as `FHIRTemplate.Reference`
 ```
 
 This is useful when you want only the reference fields (`reference`, `type`) instead of full Patient content.
+
+```json
+      :
+    {
+    "reference": "urn:uuid:xxxxxx-xxxx-xx",
+    "type": "Patient"
+    }
+      :
+```
 
 ---
 
@@ -444,6 +475,9 @@ Index IDKeyIdx On code [ IdKey, Unique ];
 
 #### Define Initial Data (`XData InsertCode`)
 
+To register data, set the `data` array in `XData InsertCode` to strings that combine the code and display text with a semicolon (`;`), as in the example below.
+For more examples, see the classes in `FHIRCustom.CodeableConcept`.
+
 ```objectscript
 XData InsertCode [ MimeType = application/json ]
 {
@@ -488,6 +522,8 @@ Set the code:
 ```objectscript
 set obj.admitSource = 1
 ```
+
+When outputting JSON, the code (=1) specified in `admitSource` is used to call `GetByCode()`, which retrieves the system URI and display text and outputs a CodeableConcept structure.
 
 Output example:
 

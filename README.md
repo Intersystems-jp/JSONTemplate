@@ -249,7 +249,7 @@ Compositionリソースのテンプレートにてsubjectの値としてpatient�
 
 1. 文字列や数値を指定
 
-   do obj.PropertyInsert("文字列")
+   do obj.Property.Insert("文字列")
 
 2. 別クラスのインスタンスを指定
 
