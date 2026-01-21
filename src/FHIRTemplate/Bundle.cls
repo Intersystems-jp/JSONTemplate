@@ -111,7 +111,7 @@ Method OutputToDynamicObject(ByRef obj As %DynamicAbstractObject) As %Status
       set ..signatureDate=$ztimestamp
     }
 
-    set obj=..Process($this,.ret)
+    set obj=..Process($this,.ret,0)
     quit:$$$ISERR(ret)
 
     // CertificateDataに証明書があれば、署名を追加する

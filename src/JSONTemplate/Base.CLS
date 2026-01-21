@@ -26,7 +26,7 @@ Method OutputToDevice() As %Status
         quit:$$$ISERR(ret)
 
         // フォーマット出力
-        set out=##class(%JSON.Formatter).%New()
+        set out=##class(JSONTemplate.Formatter).%New()
         set out.Indent=1
         set ret=out.Format(tpl)
     } catch err {
@@ -49,8 +49,8 @@ Method OutputToFile(filename As %String, charset As %String = "UTF8") As %Status
             quit
         }
 
-        #dim out as %JSON.Formatter
-        set out=##class(%JSON.Formatter).%New()
+        #dim out as JSONTemplate.Formatter
+        set out=##class(JSONTemplate.Formatter).%New()
         set out.Indent=1
 
         use filename
@@ -70,7 +70,10 @@ Method OutputToStream(stream As %Stream) As %Status
         set ret=..OutputToDynamicObject(.tpl)
         quit:$$$ISERR(ret)
 
-        do tpl.%ToJSON(stream)
+        #dim out as JSONTemplate.Formatter
+        set out=##class(JSONTemplate.Formatter).%New()
+        set out.Indent=0,out.LineTerminator=""
+        set ret=out.FormatToStream(tpl,.stream)
     } catch err {
         set ret=err.AsStatus()
     }
@@ -81,13 +84,13 @@ Method OutputToStream(stream As %Stream) As %Status
 Method OutputToDynamicObject(ByRef obj As %DynamicAbstractObject) As %Status
 {
     set ret=$$$OK
-    set obj=..Process($this,.ret)
+    set obj=..Process($this,.ret,0)
     quit ret
 }
 
 /// テンプレートからJSONデータを出力
 /// テンプレートを元にプロパティを挿入したJSONオブジェクトを返す
-ClassMethod Process(obj As %RegisteredObject, ByRef ret As %Status) As %DynamicAbstractObject [ CodeMode = objectgenerator ]
+ClassMethod Process(obj As %RegisteredObject, ByRef ret As %Status, format As %Boolean = 1) As %DynamicAbstractObject [ CodeMode = objectgenerator ]
 {
     // Abstractクラスの場合は生成しない
     if %class.Abstract {
